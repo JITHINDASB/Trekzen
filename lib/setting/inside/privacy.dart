@@ -45,6 +45,7 @@ class Privacy extends StatelessWidget {
                 ),
               ),
             ),
+            Text('datatatatfytfatfahtfa'),
           ],
         ),
       ),

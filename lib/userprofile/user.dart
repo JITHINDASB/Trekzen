@@ -1,23 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:trekzen/home/home.dart';
 import 'package:trekzen/setting/setting1.dart';
 
 class UserInputPage extends StatefulWidget {
+  const UserInputPage({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _UserInputPageState createState() => _UserInputPageState();
 }
 
 class _UserInputPageState extends State<UserInputPage> {
-  TextEditingController _nameController = TextEditingController();
-  TextEditingController _ageController = TextEditingController();
-  TextEditingController _phoneNumberController = TextEditingController();
-  TextEditingController _placeController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _ageController = TextEditingController();
+  final TextEditingController _phoneNumberController = TextEditingController();
+  final TextEditingController _placeController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _loadUserData(); // Load user data when the page initializes
+    _loadUserData();
   }
 
   void _loadUserData() async {
@@ -27,7 +29,6 @@ class _UserInputPageState extends State<UserInputPage> {
     String phoneNumber = prefs.getString('phoneNumber') ?? '';
     String place = prefs.getString('place') ?? '';
 
-    // Set the text controllers with the loaded data
     _nameController.text = name;
     _ageController.text = age.toString();
     _phoneNumberController.text = phoneNumber;
@@ -40,13 +41,10 @@ class _UserInputPageState extends State<UserInputPage> {
     String phoneNumber = _phoneNumberController.text;
     String place = _placeController.text;
 
-    // Validate age input
     int? age;
     if (ageText.isNotEmpty && int.tryParse(ageText) != null) {
       age = int.parse(ageText);
     } else {
-      // Handle invalid age input (you can show an error message or set a default value)
-      // For now, let's set it to a default value of 0
       age = 0;
     }
 
@@ -56,11 +54,11 @@ class _UserInputPageState extends State<UserInputPage> {
     prefs.setString('phoneNumber', phoneNumber);
     prefs.setString('place', place);
 
-    // Navigate to the next page
+    // ignore: use_build_context_synchronously
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => UserDataDisplayPage(),
+        builder: (context) => const UserDataDisplayPage(),
       ),
     );
   }
@@ -70,28 +68,28 @@ class _UserInputPageState extends State<UserInputPage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('User Details',
+        title: const Text('User Details',
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
         automaticallyImplyLeading: false,
         backgroundColor: Colors.black,
         leading: Padding(
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           child: GestureDetector(
             onTap: () {
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
-                  builder: (ctx2) => UserDataDisplayPage(),
+                  builder: (ctx2) => const UserDataDisplayPage(),
                 ),
               );
             },
             child: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 shape: BoxShape.circle,
                 color: Colors.white,
               ),
-              child: Center(
+              child: const Center(
                 child: Icon(
-                  Icons.arrow_back, // Back icon
+                  Icons.arrow_back,
                   size: 30,
                   color: Colors.black,
                 ),
@@ -101,7 +99,6 @@ class _UserInputPageState extends State<UserInputPage> {
         ),
       ),
       body: SingleChildScrollView(
-        // Wrap the Column with SingleChildScrollView
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -109,34 +106,34 @@ class _UserInputPageState extends State<UserInputPage> {
             children: [
               TextField(
                 controller: _nameController,
-                decoration: InputDecoration(labelText: 'Name'),
+                decoration: const InputDecoration(labelText: 'Name'),
               ),
               TextField(
                 maxLength: 3,
                 controller: _ageController,
-                decoration: InputDecoration(labelText: 'Age'),
+                decoration: const InputDecoration(labelText: 'Age'),
                 keyboardType: TextInputType.number,
               ),
               TextField(
                 maxLength: 10,
                 keyboardType: TextInputType.number,
                 controller: _phoneNumberController,
-                decoration: InputDecoration(labelText: 'Phone Number'),
+                decoration: const InputDecoration(labelText: 'Phone Number'),
               ),
               TextField(
                 controller: _placeController,
-                decoration: InputDecoration(labelText: 'Place'),
+                decoration: const InputDecoration(labelText: 'Place'),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: _saveDataAndNavigate,
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(
-                      Colors.black), // Set button background color to black
-                  foregroundColor: MaterialStateProperty.all<Color>(
-                      Colors.white), // Set text color to white
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.black),
+                  foregroundColor:
+                      MaterialStateProperty.all<Color>(Colors.white),
                 ),
-                child: Text('Save'),
+                child: const Text('Save'),
               )
             ],
           ),
@@ -147,7 +144,10 @@ class _UserInputPageState extends State<UserInputPage> {
 }
 
 class UserDataDisplayPage extends StatefulWidget {
+  const UserDataDisplayPage({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _UserDataDisplayPageState createState() => _UserDataDisplayPageState();
 }
 
@@ -177,31 +177,32 @@ class _UserDataDisplayPageState extends State<UserDataDisplayPage> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => UserInputPage(),
+        builder: (context) => const UserInputPage(),
       ),
     );
   }
 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
         leading: Padding(
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           child: GestureDetector(
             onTap: () {
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
-                  builder: (ctx2) => Settings(),
+                  builder: (ctx2) => const Settings(),
                 ),
               );
             },
             child: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 shape: BoxShape.circle,
                 color: Colors.white,
               ),
-              child: Center(
+              child: const Center(
                 child: Icon(
                   Icons.arrow_back, // Back icon
                   size: 30,
@@ -211,14 +212,14 @@ class _UserDataDisplayPageState extends State<UserDataDisplayPage> {
             ),
           ),
         ),
-        title: Text(
+        title: const Text(
           'User Data Display',
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
         actions: [
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.edit,
             ),
             color: Colors.white,
@@ -236,40 +237,39 @@ class _UserDataDisplayPageState extends State<UserDataDisplayPage> {
               children: <Widget>[
                 Text(
                   'Name: $_name',
-                  style: TextStyle(fontSize: 24), // Increase text size
+                  style: const TextStyle(fontSize: 24),
                 ),
                 Text(
                   'Age: $_age',
-                  style: TextStyle(fontSize: 24), // Increase text size
+                  style: const TextStyle(fontSize: 24),
                 ),
                 Text(
                   'Phone Number: $_phoneNumber',
-                  style: TextStyle(fontSize: 24), // Increase text size
+                  style: const TextStyle(fontSize: 24),
                 ),
                 Text(
                   'Place: $_place',
-                  style: TextStyle(fontSize: 24), // Increase text size
+                  style: const TextStyle(fontSize: 24),
                 ),
-                SizedBox(
-                  height:
-                      40, // Increased space between user data and the button
+                const SizedBox(
+                  height: 40,
                 ),
                 ElevatedButton(
                   onPressed: _navigateToHome,
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.black,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                  ),
+                  child: const Padding(
+                    padding: EdgeInsets.all(16.0),
                     child: Text(
                       'OK',
                       style: TextStyle(
                         fontSize: 18,
                         color: Colors.white,
                       ),
-                    ),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.black,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
                     ),
                   ),
                 ),
@@ -282,12 +282,10 @@ class _UserDataDisplayPageState extends State<UserDataDisplayPage> {
   }
 
   void _navigateToHome() {
-    Navigator.push(
+    Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => HomeScreen(
-          name: _name,
-        ),
+        builder: (context) => const Settings(),
       ),
     );
   }

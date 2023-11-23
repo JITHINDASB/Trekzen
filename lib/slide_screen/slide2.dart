@@ -18,7 +18,7 @@ class NextScreen extends StatelessWidget {
         color: Colors.transparent,
         child: SafeArea(
           child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 65, horizontal: 25),
+            padding: const EdgeInsets.symmetric(vertical: 65, horizontal: 25),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -31,7 +31,7 @@ class NextScreen extends StatelessWidget {
                     letterSpacing: 1.5,
                   ),
                 ),
-                SizedBox(height: 2),
+                const SizedBox(height: 2),
                 Text(
                   "The World!",
                   style: TextStyle(
@@ -41,7 +41,7 @@ class NextScreen extends StatelessWidget {
                     letterSpacing: 1.5,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 12,
                 ),
                 Text(
@@ -52,7 +52,7 @@ class NextScreen extends StatelessWidget {
                     letterSpacing: 1.2,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 30,
                 ),
                 InkWell(
@@ -64,7 +64,7 @@ class NextScreen extends StatelessWidget {
                     );
                   },
                   child: Ink(
-                    padding: EdgeInsets.all(15),
+                    padding: const EdgeInsets.all(15),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(12),

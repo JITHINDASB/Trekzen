@@ -9,11 +9,11 @@ class MyAbout extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: Padding(
-          padding: EdgeInsets.only(right: 20),
+          padding: const EdgeInsets.only(right: 20),
           child: GestureDetector(
             onTap: () {
               Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (ctx2) => MyApp1()));
+                  MaterialPageRoute(builder: (ctx2) => const MyApp1()));
             },
             child: const Icon(
               Icons.arrow_back_ios_rounded,
@@ -50,7 +50,7 @@ class MyAbout extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 10),
                 child: Text(
-                  'Version 1.1.3',
+                  'Version 1.0.1',
                 ),
               ),
             ],

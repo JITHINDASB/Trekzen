@@ -166,7 +166,7 @@ class _ScreenUpdateState extends State<ScreenUpdate> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   TextFormField(
                     controller: _nameController,
                     decoration: const InputDecoration(
@@ -181,7 +181,7 @@ class _ScreenUpdateState extends State<ScreenUpdate> {
                       }
                     },
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   TextFormField(
@@ -237,7 +237,7 @@ class _ScreenUpdateState extends State<ScreenUpdate> {
                       }
                     },
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Row(
@@ -245,7 +245,7 @@ class _ScreenUpdateState extends State<ScreenUpdate> {
                       Expanded(
                         child: TextFormField(
                           controller: _startDateController,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             labelText: 'Starting Date',
                             hintText: 'Select starting date',
                           ),
@@ -267,11 +267,11 @@ class _ScreenUpdateState extends State<ScreenUpdate> {
                           },
                         ),
                       ),
-                      SizedBox(width: 16),
+                      const SizedBox(width: 16),
                       Expanded(
                         child: TextFormField(
                           controller: _endDateController,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             labelText: 'Ending Date',
                             hintText: 'Select ending date',
                           ),
@@ -284,7 +284,6 @@ class _ScreenUpdateState extends State<ScreenUpdate> {
                             );
                             if (pickedDate != null) {
                               setState(() {
-                                // Format the date using intl package
                                 String formattedDate =
                                     DateFormat('yyyy-MM-dd').format(pickedDate);
                                 _endDateController.text = formattedDate;
@@ -295,25 +294,25 @@ class _ScreenUpdateState extends State<ScreenUpdate> {
                       )
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   DropdownButton<String>(
                     value: dropdownvalue,
-                    icon: Icon(Icons.keyboard_arrow_down,
+                    icon: const Icon(Icons.keyboard_arrow_down,
                         color: Colors.deepPurple),
                     items: items.map((String items) {
                       return DropdownMenuItem(
                         value: items,
                         child: Text(
                           items,
-                          style: TextStyle(color: Colors.black),
+                          style: const TextStyle(color: Colors.black),
                         ),
                       );
                     }).toList(),
-                    style: TextStyle(
+                    style: const TextStyle(
                         color: Color.fromARGB(255, 11, 240, 160), fontSize: 16),
-                    iconEnabledColor: Color.fromARGB(255, 16, 213, 101),
+                    iconEnabledColor: const Color.fromARGB(255, 16, 213, 101),
                     underline: Container(
                         height: 2, color: Colors.black // Underline color
                         ),
@@ -324,17 +323,17 @@ class _ScreenUpdateState extends State<ScreenUpdate> {
                       });
                     },
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Row(
                     children: [
                       Expanded(
                         child: Padding(
-                          padding: EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.all(8.0),
                           child: TextFormField(
                             controller: amountController,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               labelText: 'Amount',
                               prefixText: '₹ ',
                               border: OutlineInputBorder(),
@@ -351,10 +350,10 @@ class _ScreenUpdateState extends State<ScreenUpdate> {
                       ),
                       Expanded(
                         child: Padding(
-                          padding: EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.all(8.0),
                           child: TextFormField(
                             controller: expenseController,
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                               labelText: 'Expense',
                               prefixText: '₹ ',
                               border: OutlineInputBorder(),
@@ -371,7 +370,7 @@ class _ScreenUpdateState extends State<ScreenUpdate> {
                       ),
                     ],
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -390,8 +389,7 @@ class _ScreenUpdateState extends State<ScreenUpdate> {
                           style: TextStyle(color: Colors.white),
                         ),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              Colors.black, // Set background color to black
+                          backgroundColor: Colors.black,
                         ),
                       )
                     ],

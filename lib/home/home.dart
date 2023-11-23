@@ -5,12 +5,11 @@ import 'package:trekzen/setting/setting1.dart';
 import 'package:trekzen/trip_create/create.dart';
 import 'package:trekzen/trip_create/search.dart';
 import 'package:trekzen/trip_create/view.dart';
-import 'package:trekzen/userprofile/user.dart';
 
 class HomeScreen extends StatefulWidget {
   final String? name;
 
-  const HomeScreen({Key? key, this.name}) : super(key: key);
+  const HomeScreen({super.key, this.name});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -20,12 +19,12 @@ class _HomeScreenState extends State<HomeScreen> {
   int indexNum = 0;
   late String _name;
 
+  @override
   void initState() {
     super.initState();
     _loadName();
     // getallUser();
-    _name =
-        widget.name ?? "Leonardo Das"; // Default name if widget.name is null
+    _name = widget.name ?? "User";
   }
 
   void _loadName() async {
@@ -38,10 +37,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   // Define your pages here
   final List<Widget> pages = [
-    HomeScreen(),
-    ScreenAdd(),
-    ScreenHome(),
-    Settings(),
+    const HomeScreen(),
+    const ScreenAdd(),
+    const ScreenHome(),
+    const Settings(),
   ];
 
   @override
@@ -52,51 +51,41 @@ class _HomeScreenState extends State<HomeScreen> {
         automaticallyImplyLeading: false,
         title: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => UserDataDisplayPage(),
-                ),
-              );
-            },
-            child: Row(
-              children: [
-                CircleAvatar(
-                  radius: 20,
-                  backgroundImage: AssetImage("assets/dp.png"),
-                  // Set your profile picture asset here
-                ),
-                SizedBox(width: 10),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      _name,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 23,
-                        fontWeight: FontWeight.w500,
-                      ),
+          child: Row(
+            children: [
+              const CircleAvatar(
+                radius: 20,
+                backgroundImage: AssetImage("assets/dp.png"),
+                // Set your profile picture asset here
+              ),
+              const SizedBox(width: 10),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    _name,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 23,
+                      fontWeight: FontWeight.w500,
                     ),
-                    const Text(
-                      "Make your trip plan",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 15,
-                        fontWeight: FontWeight.w200,
-                      ),
+                  ),
+                  const Text(
+                    "Make your trip plan",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15,
+                      fontWeight: FontWeight.w200,
                     ),
-                  ],
-                ),
-              ],
-            ),
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
         flexibleSpace: Container(
           height: MediaQuery.of(context).size.height / 3.5,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             color: Colors.black,
             borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(30),
@@ -106,7 +95,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         actions: [
           Padding(
-            padding: EdgeInsets.only(right: 20),
+            padding: const EdgeInsets.only(right: 20),
             child: GestureDetector(
               onTap: () {
                 showSearch(
@@ -114,7 +103,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   delegate: ScreenSearch(),
                 );
               },
-              child: Icon(
+              child: const Icon(
                 Icons.search,
                 color: Colors.white,
               ),

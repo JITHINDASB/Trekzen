@@ -26,6 +26,7 @@ class _DreamDisplayState extends State<DreamDisplay> {
     return ValueListenableBuilder(
       //here studentListNotifier is the valuenotifier object
       valueListenable: dreamListNotifier,
+      // ignore: non_constant_identifier_names
       builder: (BuildContext ctx, List<DreamModel> DreamList, Widget? child) {
         return ListView.separated(
           itemBuilder: (ctx, indexVal) {
@@ -53,58 +54,56 @@ class _DreamDisplayState extends State<DreamDisplay> {
                 }));
               },
               child: Card(
-                margin: EdgeInsets.all(10.0),
+                margin: const EdgeInsets.all(10.0),
                 elevation: 5,
                 color: cardColors[randomIndex],
-                child: Container(
+                child: SizedBox(
                   height: 100,
                   child: ListTile(
-                    contentPadding: EdgeInsets.all(10.0),
+                    contentPadding: const EdgeInsets.all(10.0),
                     leading: CircleAvatar(
                       radius: 30,
                       backgroundImage: FileImage(File(userdata.photo)),
                     ),
                     title: Text(
-                      "${userdata.nametwo}",
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                      overflow: TextOverflow
-                          .ellipsis, // Handle overflow with ellipsis
+                      userdata.nametwo,
+                      style: const TextStyle(
+                          fontSize: 18, fontWeight: FontWeight.bold),
+                      overflow: TextOverflow.ellipsis,
                     ),
                     subtitle: Row(
                       children: [
                         Text(
-                          "${userdata.start}",
-                          style: TextStyle(
+                          userdata.start,
+                          style: const TextStyle(
                               fontSize: 10, fontWeight: FontWeight.bold),
-                          overflow: TextOverflow
-                              .ellipsis, // Handle overflow with ellipsis
+                          overflow: TextOverflow.ellipsis,
                         ),
-                        SizedBox(width: 10),
-                        Icon(
+                        const SizedBox(width: 10),
+                        const Icon(
                           Icons.airport_shuttle_rounded, // Plane icon
                           size: 20,
                           color: Colors.black,
                         ),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         Text(
-                          "${userdata.end}",
-                          style: TextStyle(
+                          userdata.end,
+                          style: const TextStyle(
                               fontSize: 10, fontWeight: FontWeight.bold),
-                          overflow: TextOverflow
-                              .ellipsis, // Handle overflow with ellipsis
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ],
                     ),
                     trailing: IconButton(
                       onPressed: () {
+                        // ignore: unnecessary_null_comparison
                         if (indexVal != null) {
-                          DreamBox(indexVal);
+                          dreamBox(indexVal);
                         } else {
                           print('ID passed is null');
                         }
                       },
-                      icon: Icon(Icons.delete),
+                      icon: const Icon(Icons.delete),
                       tooltip: 'Delete trips',
                       color: Colors.black,
                     ),
@@ -122,7 +121,7 @@ class _DreamDisplayState extends State<DreamDisplay> {
     );
   }
 
-  DreamBox(int indexValue) {
+  dreamBox(int indexValue) {
     return showDialog(
         context: context,
         builder: (context) {

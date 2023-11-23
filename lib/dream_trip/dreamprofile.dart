@@ -188,7 +188,7 @@ class _DreamProfileState extends State<DreamProfile> {
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 20,
                       ), // Add some spacing between the columns
                       Column(
@@ -243,12 +243,12 @@ class _DreamProfileState extends State<DreamProfile> {
                           RichText(
                             text: TextSpan(
                               text: '₹ ',
-                              style:
-                                  TextStyle(fontSize: 20, color: Colors.black),
+                              style: const TextStyle(
+                                  fontSize: 20, color: Colors.black),
                               children: <TextSpan>[
                                 TextSpan(
                                   text: widget.amount,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.w600),
                                 ),
@@ -257,7 +257,7 @@ class _DreamProfileState extends State<DreamProfile> {
                           ),
                         ],
                       ),
-                      SizedBox(width: 20),
+                      const SizedBox(width: 20),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -269,12 +269,12 @@ class _DreamProfileState extends State<DreamProfile> {
                           RichText(
                             text: TextSpan(
                               text: '₹ ',
-                              style:
-                                  TextStyle(fontSize: 20, color: Colors.black),
+                              style: const TextStyle(
+                                  fontSize: 20, color: Colors.black),
                               children: <TextSpan>[
                                 TextSpan(
                                   text: widget.expense,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.w600),
                                 ),

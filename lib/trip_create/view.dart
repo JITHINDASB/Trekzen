@@ -24,16 +24,16 @@ class _ScreenHomeState extends State<ScreenHome> {
           child: GestureDetector(
             onTap: () {
               Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (ctx2) => HomeScreen()));
+                  MaterialPageRoute(builder: (ctx2) => const HomeScreen()));
             },
             child: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 shape: BoxShape.circle,
                 color: Colors.white,
               ),
-              child: Center(
+              child: const Center(
                 child: Icon(
-                  Icons.arrow_back, // Back icon
+                  Icons.arrow_back,
                   size: 30,
                   color: Colors.black,
                 ),
@@ -41,13 +41,13 @@ class _ScreenHomeState extends State<ScreenHome> {
             ),
           ),
         ),
-        title: Text(
+        title: const Text(
           'Trip Details',
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         actions: [
           Padding(
-            padding: EdgeInsets.only(right: 20),
+            padding: const EdgeInsets.only(right: 20),
             child: GestureDetector(
               onTap: () {
                 showSearch(
@@ -55,7 +55,7 @@ class _ScreenHomeState extends State<ScreenHome> {
                   delegate: ScreenSearch(),
                 );
               },
-              child: Icon(
+              child: const Icon(
                 Icons.search,
                 color: Colors.white,
               ),

@@ -33,7 +33,6 @@ class _ListDataWidgetState extends State<ListDataWidget> {
     Colors.green,
     Colors.orange,
     Colors.purple,
-    // Add more colors as needed
   ];
   AmountFilter _filter = AmountFilter.all;
   DateFilter _dateFilter = DateFilter.all;
@@ -46,7 +45,7 @@ class _ListDataWidgetState extends State<ListDataWidget> {
       valueListenable: UserListNotifier,
       builder: (BuildContext ctx, List<UserModel> userList, Widget? child) {
         if (userList.isEmpty) {
-          return Center(
+          return const Center(
             child: Text(
               "No trips  planned yet!!..",
               style: TextStyle(
@@ -58,31 +57,29 @@ class _ListDataWidgetState extends State<ListDataWidget> {
           var filteredList = userList.where((user) {
             switch (_filter) {
               case AmountFilter.below500:
-                var amount = int.tryParse(user.amount ?? '');
+                var amount = int.tryParse(user.amount);
                 return amount != null && amount < 500;
               case AmountFilter.between500And5000:
-                var amount = int.tryParse(user.amount ?? '');
+                var amount = int.tryParse(user.amount);
                 return amount != null && amount >= 500 && amount <= 5000;
               case AmountFilter.above5000:
-                var amount = int.tryParse(user.amount ?? '');
+                var amount = int.tryParse(user.amount);
                 return amount != null && amount > 5000;
               default:
                 return true;
             }
           }).where((user) {
-            // Date Filter
-            var userDate = DateTime.parse(
-                user.start ?? ''); // Assuming start date is a string
+            var userDate = DateTime.parse(user.start);
             switch (_dateFilter) {
               case DateFilter.customDate:
                 return (_startDate == null || userDate.isAfter(_startDate!)) &&
                     (_endDate == null || userDate.isBefore(_endDate!));
               case DateFilter.last7Days:
                 return userDate
-                    .isAfter(DateTime.now().subtract(Duration(days: 7)));
+                    .isAfter(DateTime.now().subtract(const Duration(days: 7)));
               case DateFilter.last30Days:
                 return userDate
-                    .isAfter(DateTime.now().subtract(Duration(days: 30)));
+                    .isAfter(DateTime.now().subtract(const Duration(days: 30)));
               default:
                 return true;
             }
@@ -102,8 +99,8 @@ class _ListDataWidgetState extends State<ListDataWidget> {
                               value: filter,
                               child: Text(
                                 filter.toString().split('.').last,
-                                style:
-                                    TextStyle(fontSize: 12), // Adjust font size
+                                style: const TextStyle(
+                                    fontSize: 12), // Adjust font size
                               ),
                             );
                           }).toList(),
@@ -113,11 +110,9 @@ class _ListDataWidgetState extends State<ListDataWidget> {
                             });
                           },
                         ),
-                        SizedBox(
-                          width: 10, // Reduced width
+                        const SizedBox(
+                          width: 10,
                         ),
-
-                        // Date Filter Dropdown
                         DropdownButton<DateFilter>(
                           value: _dateFilter,
                           items: DateFilter.values.map((filter) {
@@ -125,8 +120,7 @@ class _ListDataWidgetState extends State<ListDataWidget> {
                               value: filter,
                               child: Text(
                                 filter.toString().split('.').last,
-                                style:
-                                    TextStyle(fontSize: 12), // Adjust font size
+                                style: const TextStyle(fontSize: 12),
                               ),
                             );
                           }).toList(),
@@ -139,7 +133,7 @@ class _ListDataWidgetState extends State<ListDataWidget> {
                             });
                           },
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10, // Reduced width
                         ),
                         ElevatedButton(
@@ -147,14 +141,14 @@ class _ListDataWidgetState extends State<ListDataWidget> {
                             _showDeleteAllConfirmationDialog();
                           },
                           style: ElevatedButton.styleFrom(
-                            primary: Colors.black, // Background color
-                            onPrimary: Colors.white, // Text color
-                            padding: EdgeInsets.symmetric(
-                                vertical: 8, horizontal: 12), // Adjust padding
+                            foregroundColor: Colors.white,
+                            backgroundColor: Colors.black,
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 8, horizontal: 12),
                           ),
-                          child: Text(
+                          child: const Text(
                             "Delete All",
-                            style: TextStyle(fontSize: 12), // Adjust font size
+                            style: TextStyle(fontSize: 12),
                           ),
                         )
                       ],
@@ -187,60 +181,58 @@ class _ListDataWidgetState extends State<ListDataWidget> {
                         }));
                       },
                       child: Card(
-                        margin: EdgeInsets.all(10.0),
+                        margin: const EdgeInsets.all(10.0),
                         elevation: 5,
                         color: cardColors[randomIndex],
-                        child: Container(
+                        child: SizedBox(
                           height: 100,
                           child: ListTile(
-                            contentPadding: EdgeInsets.all(10.0),
+                            contentPadding: const EdgeInsets.all(10.0),
                             leading: CircleAvatar(
                               radius: 30,
                               backgroundImage: FileImage(File(userdata.photo)),
                             ),
                             title: Text(
-                              "${userdata.nametwo}",
-                              style: TextStyle(
+                              userdata.nametwo,
+                              style: const TextStyle(
                                   fontSize: 18, fontWeight: FontWeight.bold),
-                              overflow: TextOverflow
-                                  .ellipsis, // Handle overflow with ellipsis
+                              overflow: TextOverflow.ellipsis,
                             ),
                             subtitle: Row(
                               children: [
                                 Text(
-                                  "${userdata.start}",
-                                  style: TextStyle(
+                                  userdata.start,
+                                  style: const TextStyle(
                                       fontSize: 10,
                                       fontWeight: FontWeight.bold),
-                                  overflow: TextOverflow
-                                      .ellipsis, // Handle overflow with ellipsis
+                                  overflow: TextOverflow.ellipsis,
                                 ),
-                                SizedBox(width: 10),
-                                Icon(
-                                  Icons.airport_shuttle_rounded, // Plane icon
+                                const SizedBox(width: 10),
+                                const Icon(
+                                  Icons.airport_shuttle_rounded,
                                   size: 20,
                                   color: Colors.black,
                                 ),
-                                SizedBox(width: 10),
+                                const SizedBox(width: 10),
                                 Text(
-                                  "${userdata.end}",
-                                  style: TextStyle(
+                                  userdata.end,
+                                  style: const TextStyle(
                                       fontSize: 10,
                                       fontWeight: FontWeight.bold),
-                                  overflow: TextOverflow
-                                      .ellipsis, // Handle overflow with ellipsis
+                                  overflow: TextOverflow.ellipsis,
                                 ),
                               ],
                             ),
                             trailing: IconButton(
                               onPressed: () {
+                                // ignore: unnecessary_null_comparison
                                 if (indexVal != null) {
                                   popupDialogueBox(indexVal);
                                 } else {
                                   print('ID passed is null');
                                 }
                               },
-                              icon: Icon(Icons.delete),
+                              icon: const Icon(Icons.delete),
                               tooltip: 'Delete trips',
                               color: Colors.black,
                             ),
@@ -250,7 +242,7 @@ class _ListDataWidgetState extends State<ListDataWidget> {
                     );
                   },
                   separatorBuilder: (context, index) {
-                    return Divider();
+                    return const Divider();
                   },
                   itemCount: filteredList.length,
                 ),
@@ -289,8 +281,8 @@ class _ListDataWidgetState extends State<ListDataWidget> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text("Do you want to delete this entry?"),
-          titleTextStyle: TextStyle(
+          title: const Text("Do you want to delete this entry?"),
+          titleTextStyle: const TextStyle(
             fontWeight: FontWeight.bold,
             color: Colors.red,
             fontSize: 16,
@@ -302,13 +294,13 @@ class _ListDataWidgetState extends State<ListDataWidget> {
                 deleteUser(indexValue);
                 Navigator.of(context).pop();
               },
-              child: Text("YES"),
+              child: const Text("YES"),
             ),
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text("NO"),
+              child: const Text("NO"),
             ),
           ],
         );
@@ -321,14 +313,14 @@ class _ListDataWidgetState extends State<ListDataWidget> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          title: Text("Delete All Data?"),
-          content: Text("Are you sure you want to delete all data?"),
+          title: const Text("Delete All Data?"),
+          content: const Text("Are you sure you want to delete all data?"),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text("Cancel"),
+              child: const Text("Cancel"),
             ),
             ElevatedButton(
               onPressed: () {
@@ -336,12 +328,10 @@ class _ListDataWidgetState extends State<ListDataWidget> {
                 Navigator.of(context).pop();
               },
               style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(
-                    Colors.black), // Set button background color to black
-                foregroundColor: MaterialStateProperty.all<Color>(
-                    Colors.white), // Set text color to white
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
+                foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
               ),
-              child: Text("Delete All"),
+              child: const Text("Delete All"),
             )
           ],
         );
@@ -350,7 +340,6 @@ class _ListDataWidgetState extends State<ListDataWidget> {
   }
 
   void deleteAllData() {
-    // Call the function to delete all data from the database
     deleteAllUsers();
   }
 }

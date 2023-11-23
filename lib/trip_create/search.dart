@@ -7,7 +7,6 @@ import 'package:trekzen/trip_create/list.dart';
 import 'package:trekzen/trip_create/profile.dart';
 
 class ScreenSearch extends SearchDelegate {
-  // first override to clear the search text
   @override
   List<Widget>? buildActions(BuildContext context) {
     return [
@@ -21,13 +20,12 @@ class ScreenSearch extends SearchDelegate {
     ];
   }
 
-  //to pop out of the search menu
   @override
   Widget buildLeading(BuildContext context) {
     return IconButton(
       icon: const Icon(Icons.arrow_back),
       onPressed: () {
-        close(context, null); // for closing the search page and going back
+        close(context, null);
       },
     );
   }
@@ -77,7 +75,6 @@ class ScreenSearch extends SearchDelegate {
     );
   }
 
-  //to show the querying process ie suggestions at the runtime
   @override
   Widget buildSuggestions(BuildContext context) {
     return ValueListenableBuilder(
@@ -112,7 +109,7 @@ class ScreenSearch extends SearchDelegate {
                         ),
                       );
                     },
-                    title: Text("${data.nametwo}"),
+                    title: Text(data.nametwo),
                     leading: CircleAvatar(
                       backgroundImage: FileImage(File(data.photo)),
                     ),

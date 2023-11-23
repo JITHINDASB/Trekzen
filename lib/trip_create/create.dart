@@ -9,7 +9,8 @@ import 'package:trekzen/db_model/model.dart';
 import 'package:trekzen/home/home.dart';
 
 class ScreenAdd extends StatefulWidget {
-  ScreenAdd({super.key});
+  const ScreenAdd({Key? key}) : super(key: key);
+
   @override
   State<ScreenAdd> createState() => _ScreenAddState();
 }
@@ -47,7 +48,7 @@ class _ScreenAddState extends State<ScreenAdd> {
         automaticallyImplyLeading: false,
         backgroundColor: Colors.black,
         leading: Padding(
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           child: GestureDetector(
             onTap: () {
               Navigator.of(context).pushReplacement(
@@ -77,329 +78,338 @@ class _ScreenAddState extends State<ScreenAdd> {
           margin: const EdgeInsets.all(20),
           padding: const EdgeInsets.all(10),
           child: SingleChildScrollView(
-            child: Form(
-              key: _formKey,
-              child: Column(
-                children: [
-                  Stack(
-                    children: [
-                      _photo?.path == null
-                          ? const CircleAvatar(
-                              radius: 60,
-                              backgroundColor: Colors.black,
-                              child: CircleAvatar(
-                                radius: 57,
-                                backgroundImage:
-                                    AssetImage('lib/assest/ani.jpg'),
-                              ),
-                            )
-                          : CircleAvatar(
-                              radius: 60,
-                              child: CircleAvatar(
-                                radius: 58,
-                                backgroundImage: FileImage(
-                                  File(
-                                    _photo!.path,
+            child: Container(
+              padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom),
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    Stack(
+                      children: [
+                        _photo?.path == null
+                            ? const CircleAvatar(
+                                radius: 60,
+                                backgroundColor:
+                                    Color.fromARGB(255, 195, 123, 231),
+                                child: CircleAvatar(
+                                  radius: 57,
+                                  backgroundImage:
+                                      AssetImage('lib/assest/ani.jpg'),
+                                ),
+                              )
+                            : CircleAvatar(
+                                radius: 60,
+                                child: CircleAvatar(
+                                  radius: 58,
+                                  backgroundImage: FileImage(
+                                    File(
+                                      _photo!.path,
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                      Positioned(
-                        bottom: 0,
-                        right: 0,
-                        child: Container(
-                          height: 40,
-                          width: 40,
-                          decoration: const BoxDecoration(
-                              shape: BoxShape.circle, color: Colors.white),
-                          padding: const EdgeInsets.all(4),
+                        Positioned(
+                          bottom: 0,
+                          right: 0,
                           child: Container(
+                            height: 40,
+                            width: 40,
                             decoration: const BoxDecoration(
-                                shape: BoxShape.circle, color: Colors.white),
-                            child: IconButton(
-                              icon: const Icon(Icons.camera),
-                              tooltip: 'Camera',
-                              padding: EdgeInsets.zero,
-                              onPressed: () {
-                                getPhoto();
+                              shape: BoxShape.circle,
+                              color: Color.fromARGB(255, 14, 14, 14),
+                            ),
+                            padding: const EdgeInsets.all(2),
+                            child: Container(
+                              decoration: const BoxDecoration(
+                                  shape: BoxShape.circle, color: Colors.white),
+                              child: IconButton(
+                                icon: const Icon(Icons.camera),
+                                padding: EdgeInsets.zero,
+                                onPressed: () {
+                                  getPhoto();
+                                },
+                              ),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                    const SizedBox(height: 20),
+                    TextFormField(
+                      controller: _nameController,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: 'From',
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return ' starting place is Required';
+                        } else {
+                          return null;
+                        }
+                      },
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    TextFormField(
+                      controller: _nametwoController,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: 'To',
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return ' destination is Required';
+                        } else {
+                          return null;
+                        }
+                      },
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    TextFormField(
+                      controller: _addressController,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: 'Address',
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Address Required';
+                        } else {
+                          return null;
+                        }
+                      },
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: TextFormField(
+                            controller: _startDateController,
+                            decoration: const InputDecoration(
+                              labelText: 'Starting Date',
+                              hintText: 'Select starting date',
+                            ),
+                            onTap: () async {
+                              DateTime? pickedDate = await showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime(2023),
+                                lastDate: DateTime(2024),
+                              );
+                              if (pickedDate != null) {
+                                setState(() {
+                                  String formattedDate =
+                                      DateFormat('yyyy-MM-dd')
+                                          .format(pickedDate);
+                                  _startDateController.text = formattedDate;
+                                });
+                              }
+                            },
+                          ),
+                        ),
+                        const SizedBox(width: 16),
+                        Expanded(
+                          child: TextFormField(
+                            controller: _endDateController,
+                            decoration: const InputDecoration(
+                              labelText: 'Ending Date',
+                              hintText: 'Select ending date',
+                            ),
+                            onTap: () async {
+                              DateTime? pickedDate = await showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime(2023),
+                                lastDate: DateTime(2024),
+                              );
+                              if (pickedDate != null) {
+                                setState(() {
+                                  String formattedDate =
+                                      DateFormat('yyyy-MM-dd')
+                                          .format(pickedDate);
+                                  _endDateController.text = formattedDate;
+                                });
+                              }
+                            },
+                          ),
+                        )
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: TextFormField(
+                              keyboardType: TextInputType.number,
+                              controller: amountController,
+                              decoration: const InputDecoration(
+                                labelText: 'Amount',
+                                prefixText: '₹ ',
+                                border: OutlineInputBorder(),
+                              ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return ' amount is Required';
+                                } else {
+                                  return null;
+                                }
                               },
                             ),
                           ),
                         ),
-                      )
-                    ],
-                  ),
-                  SizedBox(height: 20),
-                  TextFormField(
-                    controller: _nameController,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'From',
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return ' starting place is Required';
-                      } else {
-                        return null;
-                      }
-                    },
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  TextFormField(
-                    controller: _nametwoController,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'To',
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return ' destination is Required';
-                      } else {
-                        return null;
-                      }
-                    },
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  TextFormField(
-                    controller: _addressController,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Address',
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Address Required';
-                      } else {
-                        return null;
-                      }
-                    },
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextFormField(
-                          controller: _startDateController,
-                          decoration: const InputDecoration(
-                            labelText: 'Starting Date',
-                            hintText: 'Select starting date',
-                          ),
-                          onTap: () async {
-                            DateTime? pickedDate = await showDatePicker(
-                              context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime(2023),
-                              lastDate: DateTime(2024),
-                            );
-                            if (pickedDate != null) {
-                              setState(() {
-                                // Format the date using intl package
-                                String formattedDate =
-                                    DateFormat('yyyy-MM-dd').format(pickedDate);
-                                _startDateController.text = formattedDate;
-                              });
-                            }
-                          },
-                        ),
-                      ),
-                      SizedBox(width: 16),
-                      Expanded(
-                        child: TextFormField(
-                          controller: _endDateController,
-                          decoration: InputDecoration(
-                            labelText: 'Ending Date',
-                            hintText: 'Select ending date',
-                          ),
-                          onTap: () async {
-                            DateTime? pickedDate = await showDatePicker(
-                              context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime(2023),
-                              lastDate: DateTime(2024),
-                            );
-                            if (pickedDate != null) {
-                              setState(() {
-                                String formattedDate =
-                                    DateFormat('yyyy-MM-dd').format(pickedDate);
-                                _endDateController.text = formattedDate;
-                              });
-                            }
-                          },
-                        ),
-                      )
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: TextFormField(
-                            keyboardType: TextInputType.number,
-                            controller: amountController,
-                            decoration: InputDecoration(
-                              labelText: 'Amount',
-                              prefixText: '₹ ',
-                              border: OutlineInputBorder(),
-                            ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return ' amount is Required';
-                              } else {
-                                return null;
-                              }
-                            },
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.all(8.0),
-                          child: TextFormField(
-                            keyboardType: TextInputType.number,
-                            controller: expenseController,
-                            decoration: InputDecoration(
-                              labelText: 'Expense',
-                              prefixText: '₹ ',
-                              border: OutlineInputBorder(),
-                            ),
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return ' expense is Required';
-                              } else {
-                                return null;
-                              }
-                            },
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  DropdownButton<String>(
-                    value: dropdownvalue,
-                    icon: const Icon(Icons.keyboard_arrow_down,
-                        color: Colors.deepPurple),
-                    items: items.map((String items) {
-                      return DropdownMenuItem(
-                        value: items,
-                        child: Text(
-                          items,
-                          style: TextStyle(color: Colors.black),
-                        ),
-                      );
-                    }).toList(),
-                    style: const TextStyle(
-                        color: Color.fromARGB(255, 11, 240, 160), fontSize: 16),
-                    iconEnabledColor: Color.fromARGB(255, 16, 213, 101),
-                    underline: Container(
-                        height: 2, color: Colors.black // Underline color
-                        ),
-                    elevation: 8,
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        dropdownvalue = newValue!;
-                      });
-                    },
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  TextFormField(
-                    maxLength: 10,
-                    keyboardType: TextInputType.number,
-                    controller: _phoneController,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Phone Number',
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'phone number is required';
-                      } else if (value.length < 10) {
-                        return ' Invalid phone number';
-                      } else {
-                        return null;
-                      }
-                    },
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate() && _photo != null) {
-                        addUserToModel();
-                      } else if (_photo == null) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            backgroundColor: Colors.red,
-                            content: Text(
-                              'Please add image!',
-                              style: TextStyle(
-                                color: Colors.white,
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: TextFormField(
+                              keyboardType: TextInputType.number,
+                              controller: expenseController,
+                              decoration: const InputDecoration(
+                                labelText: 'Expense',
+                                prefixText: '₹ ',
+                                border: OutlineInputBorder(),
                               ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return ' expense is Required';
+                                } else {
+                                  return null;
+                                }
+                              },
                             ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    DropdownButton<String>(
+                      value: dropdownvalue,
+                      icon: const Icon(Icons.keyboard_arrow_down,
+                          color: Colors.deepPurple),
+                      items: items.map((String items) {
+                        return DropdownMenuItem(
+                          value: items,
+                          child: Text(
+                            items,
+                            style: const TextStyle(color: Colors.black),
                           ),
                         );
-                      } else {
-                        print('Empty field found');
-                      }
-                    },
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(
-                          Colors.black), // Set button background color to black
-                      foregroundColor: MaterialStateProperty.all<Color>(
-                          Colors.white), // Set text color to white
+                      }).toList(),
+                      style: const TextStyle(
+                          color: Color.fromARGB(255, 11, 240, 160),
+                          fontSize: 16),
+                      iconEnabledColor: const Color.fromARGB(255, 16, 213, 101),
+                      underline: Container(
+                          height: 2, color: Colors.black // Underline color
+                          ),
+                      elevation: 8,
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          dropdownvalue = newValue!;
+                        });
+                      },
                     ),
-                    child: const Text('Done'),
-                  ),
-                  const SizedBox(height: 20),
-                  const Text(
-                    "Don't have much money? Add your dream trip!",
-                    style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blue),
-                  ),
-                  ElevatedButton(
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    TextFormField(
+                      maxLength: 10,
+                      keyboardType: TextInputType.number,
+                      controller: _phoneController,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: 'Phone Number',
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'phone number is required';
+                        } else if (value.length < 10) {
+                          return ' Invalid phone number';
+                        } else {
+                          return null;
+                        }
+                      },
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    ElevatedButton(
                       onPressed: () {
                         if (_formKey.currentState!.validate() &&
                             _photo != null) {
-                          DreamModelWay();
+                          addUserToModel();
                         } else if (_photo == null) {
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(const SnackBar(
-                                  backgroundColor: Colors.red,
-                                  content: Text(
-                                    'Please add image!',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                    ),
-                                  )));
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              backgroundColor: Colors.red,
+                              content: Text(
+                                'Please add image!',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          );
                         } else {
                           print('Empty field found');
                         }
                       },
                       style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(Colors
-                            .black), // Set button background color to black
-                        foregroundColor: MaterialStateProperty.all<Color>(
-                            Colors.white), // Set text color to white
+                        backgroundColor:
+                            MaterialStateProperty.all<Color>(Colors.black),
+                        foregroundColor:
+                            MaterialStateProperty.all<Color>(Colors.white),
                       ),
-                      child: const Text('DreamTrip')),
-                ],
+                      child: const Text('Done'),
+                    ),
+                    const SizedBox(height: 20),
+                    const Text(
+                      "Don't have much money? Add your dream trip!",
+                      style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue),
+                    ),
+                    ElevatedButton(
+                        onPressed: () {
+                          if (_formKey.currentState!.validate() &&
+                              _photo != null) {
+                            dreamModelWay();
+                          } else if (_photo == null) {
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                                    backgroundColor: Colors.red,
+                                    content: Text(
+                                      'Please add image!',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                      ),
+                                    )));
+                          } else {
+                            print('Empty field found');
+                          }
+                        },
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.black),
+                          foregroundColor:
+                              MaterialStateProperty.all<Color>(Colors.white),
+                        ),
+                        child: const Text('DreamTrip')),
+                  ],
+                ),
               ),
             ),
           ),
@@ -445,28 +455,27 @@ class _ScreenAddState extends State<ScreenAdd> {
   }
 
   Future<void> addUserToModel() async {
-    final _name = _nameController.text.trim();
-    final _nametwo = _nametwoController.text.trim();
-    final _phone = _phoneController.text.trim();
-    final _address = _addressController.text.trim();
-    final _start = _startDateController.text.trim();
-    final _end = _endDateController.text.trim();
-    final _amount = amountController.text.trim();
-    final _expense = expenseController.text.trim();
-    final _image = _photo;
+    final name = _nameController.text.trim();
+    final nametwo = _nametwoController.text.trim();
+    final phone = _phoneController.text.trim();
+    final address = _addressController.text.trim();
+    final start = _startDateController.text.trim();
+    final end = _endDateController.text.trim();
+    final amount = amountController.text.trim();
+    final expense = expenseController.text.trim();
+    final image = _photo;
 
     if (_photo!.path.isEmpty ||
-        _name.isEmpty ||
-        _phone.isEmpty ||
-        _nametwo.isEmpty ||
-        _start.isEmpty ||
-        _end.isEmpty ||
-        _amount.isEmpty ||
-        _expense.isEmpty ||
-        _address.isEmpty) {
+        name.isEmpty ||
+        phone.isEmpty ||
+        nametwo.isEmpty ||
+        start.isEmpty ||
+        end.isEmpty ||
+        amount.isEmpty ||
+        expense.isEmpty ||
+        address.isEmpty) {
       return;
     } else {
-      //reset fields
       _nameController.text = '';
       _nametwoController.text = '';
       _phoneController.text = '';
@@ -477,83 +486,80 @@ class _ScreenAddState extends State<ScreenAdd> {
       expenseController.text = '';
       _photo = null;
       setState(() {
-        popDialogueBox(); //to show success message
+        popDialogueBox();
       });
     }
 
     final userObject = UserModel(
-        name: _name,
-        nametwo: _nametwo,
-        adress: _address,
-        phone: _phone,
-        start: _start,
-        end: _end,
-        amount: _amount,
-        expense: _expense,
+        name: name,
+        nametwo: nametwo,
+        adress: address,
+        phone: phone,
+        start: start,
+        end: end,
+        amount: amount,
+        expense: expense,
         dropdown: dropdownvalue,
-        photo: _image!.path,
+        photo: image!.path,
         id: DateTime.now().millisecond.toString());
-    print(
-        "$_name $_nametwo $_address $_end $_amount $_expense  $_start $_phone");
+    print("$name $nametwo $address $end $amount $expense  $start $phone");
 
     addUser(userObject);
   }
 
   File? _photo;
-  bool _isImagePickerActive =
-      false; // Flag to check if the image picker is active
+  bool _isImagePickerActive = false;
 
-  Future<void> getPhoto() async {
+  Future<File> getPhoto() async {
     if (_isImagePickerActive) {
-      return; // Image picker is already active, return without opening it again
+      return Future.error("Image picker is already active.");
     }
 
     try {
       setState(() {
-        _isImagePickerActive =
-            true; // Set the flag to indicate that the picker is active
+        _isImagePickerActive = true;
       });
 
       final photo = await ImagePicker().pickImage(source: ImageSource.gallery);
       if (photo == null) {
-        // Handle if user cancels image picker
+        return Future.error("Image picking canceled by user.");
       } else {
         final photoTemp = File(photo.path);
         setState(() {
           _photo = photoTemp;
         });
+        return _photo!;
       }
     } catch (e) {
-      // Handle other exceptions that might occur during image picking
       print('Error occurred: $e');
+      return Future.error("Error occurred: $e");
     } finally {
       setState(() {
-        _isImagePickerActive =
-            false; // Reset the flag after image picking is done
+        _isImagePickerActive = false;
       });
     }
   }
 
-  Future<void> DreamModelWay() async {
-    final _name = _nameController.text.trim();
-    final _nametwo = _nametwoController.text.trim();
-    final _phone = _phoneController.text.trim();
-    final _address = _addressController.text.trim();
-    final _start = _startDateController.text.trim();
-    final _end = _endDateController.text.trim();
-    final _amount = amountController.text.trim();
-    final _expense = expenseController.text.trim();
-    final _image = _photo;
+  Future<void> dreamModelWay() async {
+    final name = _nameController.text.trim();
+    final nametwo = _nametwoController.text.trim();
+    final phone = _phoneController.text.trim();
+    final address = _addressController.text.trim();
+    final start = _startDateController.text.trim();
+    final end = _endDateController.text.trim();
+    final amount = amountController.text.trim();
+    final expense = expenseController.text.trim();
+    final image = _photo;
 
     if (_photo!.path.isEmpty ||
-        _name.isEmpty ||
-        _phone.isEmpty ||
-        _nametwo.isEmpty ||
-        _start.isEmpty ||
-        _end.isEmpty ||
-        _amount.isEmpty ||
-        _expense.isEmpty ||
-        _address.isEmpty) {
+        name.isEmpty ||
+        phone.isEmpty ||
+        nametwo.isEmpty ||
+        start.isEmpty ||
+        end.isEmpty ||
+        amount.isEmpty ||
+        expense.isEmpty ||
+        address.isEmpty) {
       return;
     } else {
       //reset fields
@@ -567,54 +573,53 @@ class _ScreenAddState extends State<ScreenAdd> {
       expenseController.text = '';
       _photo = null;
       setState(() {
-        DreamBox(); //to show success message
+        popDialogueBox();
       });
     }
 
-    final DreamObject = DreamModel(
-        name: _name,
-        nametwo: _nametwo,
-        adress: _address,
-        phone: _phone,
-        start: _start,
-        end: _end,
-        amount: _amount,
-        expense: _expense,
+    final dreamObject = DreamModel(
+        name: name,
+        nametwo: nametwo,
+        adress: address,
+        phone: phone,
+        start: start,
+        end: end,
+        amount: amount,
+        expense: expense,
         dropdown: dropdownvalue,
-        photo: _image!.path,
+        photo: image!.path,
         id: DateTime.now().millisecond.toString());
-    print(
-        "$_name $_nametwo $_address $_end $_amount $_expense $_start $_phone");
+    print("$name $nametwo $address $end $amount $expense $start $phone");
 
-    addDream(DreamObject);
+    addDream(dreamObject);
   }
 
-  DreamBox() {
-    return showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: const Text("Sucess"),
-            titleTextStyle: const TextStyle(
-                fontWeight: FontWeight.bold, color: Colors.green, fontSize: 20),
-            actionsOverflowButtonSpacing: 20,
-            actions: [
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context)
-                        .pushReplacement(MaterialPageRoute(builder: (ctx) {
-                      return const HomeScreen();
-                    }));
-                  },
-                  child: const Text("Back")),
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text("Add New")),
-            ],
-            content: const Text("Saved successfully"),
-          );
-        });
-  }
+  // DreamBox() {
+  //   return showDialog(
+  //       context: context,
+  //       builder: (context) {
+  //         return AlertDialog(
+  //           title: const Text("Sucess"),
+  //           titleTextStyle: const TextStyle(
+  //               fontWeight: FontWeight.bold, color: Colors.green, fontSize: 20),
+  //           actionsOverflowButtonSpacing: 20,
+  //           actions: [
+  //             ElevatedButton(
+  //                 onPressed: () {
+  //                   Navigator.of(context)
+  //                       .pushReplacement(MaterialPageRoute(builder: (ctx) {
+  //                     return const HomeScreen();
+  //                   }));
+  //                 },
+  //                 child: const Text("Back")),
+  //             ElevatedButton(
+  //                 onPressed: () {
+  //                   Navigator.of(context).pop();
+  //                 },
+  //                 child: const Text("Add New")),
+  //           ],
+  //           content: const Text("Saved successfully"),
+  //         );
+  //       });
+  // }
 }

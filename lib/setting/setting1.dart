@@ -23,11 +23,11 @@ class _SettingState extends State<Settings> {
             floating: false,
             pinned: true,
             leading: Padding(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: GestureDetector(
                 onTap: () {
                   Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (ctx2) => HomeScreen()));
+                      MaterialPageRoute(builder: (ctx2) => const HomeScreen()));
                 },
                 child: const Icon(
                   Icons.arrow_circle_left_outlined,
@@ -36,7 +36,7 @@ class _SettingState extends State<Settings> {
                 ),
               ),
             ),
-            flexibleSpace: FlexibleSpaceBar(
+            flexibleSpace: const FlexibleSpaceBar(
               title: Text(
                 "Profile",
                 style:
@@ -95,7 +95,7 @@ class _SettingState extends State<Settings> {
                     onTap: () {
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
-                            builder: (ctx2) => UserDataDisplayPage()),
+                            builder: (ctx2) => const UserDataDisplayPage()),
                       );
                     },
                   ),
@@ -108,7 +108,7 @@ class _SettingState extends State<Settings> {
                     title: "Dream Trips",
                     onTap: () {
                       Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(builder: (ctx2) => Dream()));
+                          MaterialPageRoute(builder: (ctx2) => const Dream()));
                     },
                   ),
                   const SizedBox(
@@ -120,10 +120,10 @@ class _SettingState extends State<Settings> {
                     title: "settings",
                     onTap: () {
                       Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(builder: (ctx2) => MyApp1()));
+                          MaterialPageRoute(builder: (ctx2) => const MyApp1()));
                     },
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
                   GestureDetector(
@@ -138,12 +138,12 @@ class _SettingState extends State<Settings> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          Icon(
+                          const Icon(
                             Icons.support_agent,
                             size: 30,
                             color: Colors.white,
                           ),
-                          SizedBox(width: 10),
+                          const SizedBox(width: 10),
                           GestureDetector(
                             onTap: () {
                               // Navigator.push(
@@ -153,7 +153,7 @@ class _SettingState extends State<Settings> {
                               //           NextPage()), // Replace NextPage() with the actual widget for the next page
                               // );
                             },
-                            child: Text(
+                            child: const Text(
                               "Feel Free to Ask, We're Ready to Help",
                               style: TextStyle(
                                 fontSize: 10,

@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trekzen/log_sign/login.dart';
 import 'package:trekzen/setting/inside/about.dart';
 import 'package:trekzen/setting/inside/privacy.dart';
 import 'package:trekzen/setting/inside/terms&condition.dart';
 import 'package:trekzen/setting/setting1.dart';
+import 'package:trekzen/splash/splash.dart';
 
 void main() {
-  runApp(MyApp1());
+  runApp(const MyApp1());
 }
 
 class MyApp1 extends StatelessWidget {
+  const MyApp1({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -18,11 +22,11 @@ class MyApp1 extends StatelessWidget {
         backgroundColor: Colors.black,
         appBar: AppBar(
           leading: Padding(
-            padding: EdgeInsets.only(right: 20),
+            padding: const EdgeInsets.only(right: 20),
             child: GestureDetector(
               onTap: () {
                 Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (ctx2) => Settings()));
+                    MaterialPageRoute(builder: (ctx2) => const Settings()));
               },
               child: const Icon(
                 Icons.arrow_back_ios_rounded,
@@ -30,39 +34,41 @@ class MyApp1 extends StatelessWidget {
               ),
             ),
           ),
-          backgroundColor: Colors.white, // White app bar
-          title: Text(
+          backgroundColor: Colors.white,
+          title: const Text(
             'Settings',
             style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
           ),
           centerTitle: true,
         ),
-        body: MyBody(),
+        body: const MyBody(),
       ),
     );
   }
 }
 
 class MyBody extends StatelessWidget {
+  const MyBody({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: EdgeInsets.all(20.0),
+      padding: const EdgeInsets.all(20.0),
       children: [
-        Container(
-          height: 60, // Adjust the height as needed
+        SizedBox(
+          height: 60,
           child: ElevatedButton(
             onPressed: () {
               Navigator.pushAndRemoveUntil(
                 context,
-                MaterialPageRoute(builder: (context) => Privacy()),
+                MaterialPageRoute(builder: (context) => const Privacy()),
                 (Route) => false,
               );
             },
             style: ElevatedButton.styleFrom(
-              primary: Colors.white, // Black button background
+              backgroundColor: Colors.white,
             ),
-            child: Text(
+            child: const Text(
               'Privacy Policy',
               style: TextStyle(
                   color: Colors.black,
@@ -71,21 +77,21 @@ class MyBody extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(height: 20),
-        Container(
-          height: 60, // Adjust the height as needed
+        const SizedBox(height: 20),
+        SizedBox(
+          height: 60,
           child: ElevatedButton(
             onPressed: () {
               Navigator.pushAndRemoveUntil(
                 context,
-                MaterialPageRoute(builder: (context) => TermsCondition()),
+                MaterialPageRoute(builder: (context) => const TermsCondition()),
                 (Route) => false,
               );
             },
             style: ElevatedButton.styleFrom(
-              primary: Colors.white, // Black button background
+              backgroundColor: Colors.white,
             ),
-            child: Text(
+            child: const Text(
               'Terms and conditions',
               style: TextStyle(
                   color: Colors.black,
@@ -94,21 +100,21 @@ class MyBody extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(height: 20),
-        Container(
-          height: 60, // Adjust the height as needed
+        const SizedBox(height: 20),
+        SizedBox(
+          height: 60,
           child: ElevatedButton(
             onPressed: () {
               Navigator.pushAndRemoveUntil(
                 context,
-                MaterialPageRoute(builder: (context) => MyAbout()),
+                MaterialPageRoute(builder: (context) => const MyAbout()),
                 (Route) => false,
               );
             },
             style: ElevatedButton.styleFrom(
-              primary: Colors.white, // Black button background
+              backgroundColor: Colors.white,
             ),
-            child: Text(
+            child: const Text(
               'About',
               style: TextStyle(
                   color: Colors.black,
@@ -117,37 +123,34 @@ class MyBody extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(height: 20),
-        Container(
-          height: 60, // Adjust the height as needed
+        const SizedBox(height: 20),
+        SizedBox(
+          height: 60,
           child: ElevatedButton(
             onPressed: () {
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
                   return AlertDialog(
-                    title: Text('Logout'),
-                    content: Text('Are you sure you want to logout?'),
+                    title: const Text('Logout'),
+                    content: const Text('Are you sure you want to logout?'),
                     actions: <Widget>[
                       TextButton(
-                        child: Text('Back'),
+                        child: const Text('Back'),
                         onPressed: () {
                           Navigator.of(context).pop();
                         },
                       ),
                       ElevatedButton(
-                        child: Text(
-                          'OK',
-                          style: TextStyle(color: Colors.red),
-                        ),
                         onPressed: () {
-                          // Perform logout actions here
-                          Navigator.of(context).pop(); // Close the dialog
-                          Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(builder: (ctx2) => Signin()));
+                          signout(context);
                         },
                         style: ElevatedButton.styleFrom(
-                          primary: Colors.white, // OK button background
+                          backgroundColor: Colors.white,
+                        ),
+                        child: const Text(
+                          'OK',
+                          style: TextStyle(color: Colors.red),
                         ),
                       ),
                     ],
@@ -156,9 +159,9 @@ class MyBody extends StatelessWidget {
               );
             },
             style: ElevatedButton.styleFrom(
-              primary: Colors.white, // Black button background
+              backgroundColor: Colors.white,
             ),
-            child: Text('Logout',
+            child: const Text('Logout',
                 style: TextStyle(
                     color: Colors.black,
                     fontSize: 17,
@@ -167,5 +170,13 @@ class MyBody extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  signout(BuildContext ctx) async {
+    final sharedPrefs = await SharedPreferences.getInstance();
+    await sharedPrefs.setBool(SAVE_KEY_NAME, false);
+    // ignore: use_build_context_synchronously
+    Navigator.of(ctx).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (ctx) => Signin()), (route) => false);
   }
 }

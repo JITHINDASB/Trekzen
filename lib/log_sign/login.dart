@@ -2,14 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:trekzen/home/home.dart';
 import 'package:trekzen/log_sign/signup.dart';
+import 'package:trekzen/splash/splash.dart';
 
+// ignore: constant_identifier_names
 const Save_Key = 'isLoggedIn';
 void main() => runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
         '/': (context) => Signin(),
-        '/register': (context) => Register(),
+        '/register': (context) => const Register(),
       },
     ));
 
@@ -24,23 +26,26 @@ class Signin extends StatelessWidget {
 
   Future<void> _login(BuildContext context) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? storedEmail = prefs.getString('email');
-    String? storedPassword = prefs.getString('password');
+    String? storedEmail = prefs.getString('email_${_emailController.text}');
+    String? storedPassword =
+        prefs.getString('password_${_emailController.text}');
 
-    if (_formKey.currentState!.validate()) {
-      String enteredEmail = _emailController.text;
-      String enteredPassword = _passwordController.text;
-
-      if (enteredEmail == storedEmail && enteredPassword == storedPassword) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => HomeScreen()),
-        );
-      } else {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('Invalid credentials')));
-      }
+    if (storedEmail == _emailController.text &&
+        storedPassword == _passwordController.text) {
+      // Successfully logged in
+      // ignore: use_build_context_synchronously
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const HomeScreen()),
+      );
+    } else {
+      // ignore: use_build_context_synchronously
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('Create an account')));
     }
+
+    final sharedPrefs = await SharedPreferences.getInstance();
+    await sharedPrefs.setBool(SAVE_KEY_NAME, true);
   }
 
   @override
@@ -49,14 +54,12 @@ class Signin extends StatelessWidget {
       body: Stack(
         children: [
           Image.asset(
-            'assets/e.jpg', // Replace with your image asset path
+            'assets/e.jpg',
             width: double.infinity,
             height: double.infinity,
             fit: BoxFit.cover,
-            color: Color.fromARGB(255, 23, 15, 15)
-                .withOpacity(0.2), // Adjust opacity for brightness
-            colorBlendMode:
-                BlendMode.darken, // Adjust blend mode for brightness
+            color: const Color.fromARGB(255, 23, 15, 15).withOpacity(0.2),
+            colorBlendMode: BlendMode.darken,
           ),
           SafeArea(
             child: Center(
@@ -103,6 +106,8 @@ class Signin extends StatelessWidget {
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'Enter Password';
+                          } else if (value.length < 6) {
+                            return 'Password must be at least 6 characters';
                           } else {
                             return null;
                           }
@@ -113,21 +118,22 @@ class Signin extends StatelessWidget {
                       ),
                       ElevatedButton(
                         onPressed: () => _login(context),
-                        child: Text(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.black),
+                        child: const Text(
                           'Login',
                           style: TextStyle(color: Colors.white),
                         ),
-                        style: ElevatedButton.styleFrom(primary: Colors.black),
                       ),
                       TextButton(
                         onPressed: () {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => Register()));
+                                  builder: (context) => const Register()));
                         },
                         child: const Text(
-                          'Create Account',
+                          'Don\'t have an account? Create Account',
                           style: TextStyle(
                               color: Colors.white, fontWeight: FontWeight.bold),
                         ),

@@ -53,23 +53,23 @@ class _ScreenProfileState extends State<ScreenProfile> {
           style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
         ),
         leading: Padding(
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           child: GestureDetector(
             onTap: () {
               Navigator.of(context).pushReplacement(
                 MaterialPageRoute(
-                  builder: (ctx2) => HomeScreen(),
+                  builder: (ctx2) => const HomeScreen(),
                 ),
               );
             },
             child: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 shape: BoxShape.circle,
                 color: Colors.white,
               ),
-              child: Center(
+              child: const Center(
                 child: Icon(
-                  Icons.arrow_back, // Back icon
+                  Icons.arrow_back,
                   size: 30,
                   color: Colors.black,
                 ),
@@ -215,8 +215,7 @@ class _ScreenProfileState extends State<ScreenProfile> {
                           ),
                         ],
                       ),
-                      SizedBox(
-                          width: 20), // Add some spacing between the columns
+                      const SizedBox(width: 20),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -269,12 +268,12 @@ class _ScreenProfileState extends State<ScreenProfile> {
                           RichText(
                             text: TextSpan(
                               text: '₹ ',
-                              style:
-                                  TextStyle(fontSize: 20, color: Colors.black),
+                              style: const TextStyle(
+                                  fontSize: 20, color: Colors.black),
                               children: <TextSpan>[
                                 TextSpan(
                                   text: widget.amount,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.w600),
                                 ),
@@ -283,7 +282,7 @@ class _ScreenProfileState extends State<ScreenProfile> {
                           ),
                         ],
                       ),
-                      SizedBox(width: 20),
+                      const SizedBox(width: 20),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -295,12 +294,12 @@ class _ScreenProfileState extends State<ScreenProfile> {
                           RichText(
                             text: TextSpan(
                               text: '₹ ',
-                              style:
-                                  TextStyle(fontSize: 20, color: Colors.black),
+                              style: const TextStyle(
+                                  fontSize: 20, color: Colors.black),
                               children: <TextSpan>[
                                 TextSpan(
                                   text: widget.expense,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 20,
                                       fontWeight: FontWeight.w600),
                                 ),
@@ -343,8 +342,7 @@ class _ScreenProfileState extends State<ScreenProfile> {
                       style: TextStyle(color: Colors.white),
                     ),
                     style: ElevatedButton.styleFrom(
-                      backgroundColor:
-                          Colors.black, // Set background color to black
+                      backgroundColor: Colors.black,
                     ),
                   )
                 ],

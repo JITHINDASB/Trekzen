@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:trekzen/db_model/database/db.dart';
 import 'package:trekzen/home/home.dart';
 import 'package:trekzen/log_sign/login.dart';
 
 void main() => runApp(MaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
-      routes: {'/': (context) => Register()},
+      routes: {'/': (context) => const Register()},
     ));
 
 class Register extends StatefulWidget {
-  const Register({Key? key}) : super(key: key);
+  const Register({super.key});
 
   @override
   State<Register> createState() => _RegisterState();
@@ -20,13 +21,22 @@ class _RegisterState extends State<Register> {
   final _formkey = GlobalKey<FormState>();
 
   // Define TextEditingController for each TextFormField
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   void _saveCredentials(String email, String password) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('email', email);
-    prefs.setString('password', password);
+    // Use email as part of the key to store data separately for each user
+    prefs.setString('email_$email', email);
+    prefs.setString('password_$email', password);
+
+    await deleteAllUsers();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _resetForm();
   }
 
   @override
@@ -42,7 +52,7 @@ class _RegisterState extends State<Register> {
           },
           color: Colors.black,
         ),
-        title: Text(
+        title: const Text(
           'SignUp',
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
@@ -59,7 +69,7 @@ class _RegisterState extends State<Register> {
                 Padding(
                   padding: const EdgeInsets.only(top: 20.0),
                   child: Center(
-                    child: Container(
+                    child: SizedBox(
                       width: 200,
                       height: 150,
                       child: Image.asset('assets/z.jpg'),
@@ -70,8 +80,13 @@ class _RegisterState extends State<Register> {
                   padding: const EdgeInsets.all(8.0),
                   child: TextFormField(
                     controller: _emailController, // Assign the controller
-
-                    decoration: InputDecoration(
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter a Username';
+                      }
+                      return null;
+                    },
+                    decoration: const InputDecoration(
                       hintText: 'leo@gmail.com',
                       labelText: 'Email',
                       prefixIcon: Icon(
@@ -99,7 +114,7 @@ class _RegisterState extends State<Register> {
                       }
                       return null;
                     },
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: '******',
                       labelText: 'Password',
                       prefixIcon: Icon(
@@ -117,7 +132,9 @@ class _RegisterState extends State<Register> {
                 Center(
                   child: Padding(
                     padding: const EdgeInsets.all(18.0),
-                    child: Container(
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: 50,
                       child: ElevatedButton(
                         onPressed: () {
                           if (_formkey.currentState!.validate()) {
@@ -130,23 +147,22 @@ class _RegisterState extends State<Register> {
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => HomeScreen()),
+                                  builder: (context) => const HomeScreen()),
                             );
                           }
                         },
-                        child: Text(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.black),
+                        child: const Text(
                           'Register',
                           style: TextStyle(
                               color: Colors.white, fontWeight: FontWeight.w800),
                         ),
-                        style: ElevatedButton.styleFrom(primary: Colors.black),
                       ),
-                      width: MediaQuery.of(context).size.width,
-                      height: 50,
                     ),
                   ),
                 ),
-                Center(
+                const Center(
                   child: Padding(
                     padding: EdgeInsets.only(top: 20),
                     child: Center(
@@ -159,10 +175,10 @@ class _RegisterState extends State<Register> {
                 ),
                 Center(
                   child: Padding(
-                    padding: EdgeInsets.only(top: 20, left: 90),
+                    padding: const EdgeInsets.only(top: 20, left: 90),
                     child: Row(
                       children: [
-                        Container(
+                        SizedBox(
                           height: 50,
                           width: 50,
                           child: Image.asset(
@@ -170,7 +186,7 @@ class _RegisterState extends State<Register> {
                             fit: BoxFit.cover,
                           ),
                         ),
-                        Container(
+                        SizedBox(
                           height: 70,
                           width: 70,
                           child: Image.asset(
@@ -184,18 +200,16 @@ class _RegisterState extends State<Register> {
                 ),
                 Center(
                   child: Container(
-                    padding: EdgeInsets.only(top: 50),
+                    padding: const EdgeInsets.only(top: 50),
                     child: GestureDetector(
                       onTap: () {
-                        // Navigate to the next page here
                         Navigator.of(context).push(
                           MaterialPageRoute(
-                            builder: (context) =>
-                                Signin(), // Replace NextPage() with your actual next page widget
+                            builder: (context) => Signin(),
                           ),
                         );
                       },
-                      child: Text(
+                      child: const Text(
                         'SIGN IN',
                         style: TextStyle(
                             fontSize: 20,
@@ -211,5 +225,9 @@ class _RegisterState extends State<Register> {
         ),
       ),
     );
+  }
+
+  void _resetForm() {
+    deleteAllUsers();
   }
 }

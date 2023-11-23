@@ -28,7 +28,7 @@ class Screen2 extends StatelessWidget {
             color: Colors.white,
           ),
         ),
-        SizedBox(
+        const SizedBox(
           width: 10,
         ),
         Text(
@@ -38,7 +38,7 @@ class Screen2 extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        Spacer(),
+        const Spacer(),
         InkWell(
           onTap: onTap,
           child: Container(

@@ -114,7 +114,7 @@ class DreamSearch extends SearchDelegate {
                         ),
                       );
                     },
-                    title: Text("${data.nametwo}"),
+                    title: Text(data.nametwo),
                     leading: CircleAvatar(
                       backgroundImage: FileImage(File(data.photo)),
                     ),

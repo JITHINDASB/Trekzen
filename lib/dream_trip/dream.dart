@@ -12,18 +12,18 @@ class Dream extends StatefulWidget {
 }
 
 class _DreamState extends State<Dream> {
-  bool isLoading = true; // Flag to track whether data is loading or not
+  bool isLoading = true;
 
   @override
   void initState() {
     super.initState();
-    loadData(); // Load data when the widget is initialized
+    loadData();
   }
 
   Future<void> loadData() async {
     await getalldata();
     setState(() {
-      isLoading = false; // Set isLoading to false when data is loaded
+      isLoading = false;
     });
   }
 
@@ -33,23 +33,23 @@ class _DreamState extends State<Dream> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Dream Trips',
+        title: const Text('Dream Trips',
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
         automaticallyImplyLeading: false,
         backgroundColor: Colors.black,
         leading: Padding(
-          padding: EdgeInsets.all(10),
+          padding: const EdgeInsets.all(10),
           child: GestureDetector(
             onTap: () {
               Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (ctx2) => Settings()));
+                  MaterialPageRoute(builder: (ctx2) => const Settings()));
             },
             child: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 shape: BoxShape.circle,
                 color: Colors.white,
               ),
-              child: Center(
+              child: const Center(
                 child: Icon(
                   Icons.arrow_back, // Back icon
                   size: 30,
@@ -61,7 +61,7 @@ class _DreamState extends State<Dream> {
         ),
         actions: [
           Padding(
-            padding: EdgeInsets.only(right: 20),
+            padding: const EdgeInsets.only(right: 20),
             child: GestureDetector(
               onTap: () {
                 showSearch(
@@ -69,7 +69,7 @@ class _DreamState extends State<Dream> {
                   delegate: DreamSearch(),
                 );
               },
-              child: Icon(
+              child: const Icon(
                 Icons.search,
                 color: Colors.white,
               ),
